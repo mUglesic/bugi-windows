@@ -1,0 +1,197 @@
+
+:root {
+
+    --border-color: #363333;
+    --shadow-color: #686868;
+
+    --window-bg-color: #e2d6d6;
+    --window-titlebar-bg-color: #f0e9e9;
+    --window-content-bg-color: #e2d6d6;
+
+}
+
+@property --btn-gradient-offset {
+
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 75%;
+
+}
+
+html, body {
+
+    padding: 0;
+    margin: 0;
+
+}
+
+body {
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-family: Inter, sans-serif;
+    
+    /* background: rgb(1, 0, 49); */
+
+}
+
+.btn {
+
+    font-size: 2.5em;
+    color: white;
+
+    padding: 10px;
+
+    border: solid 3px #a8a8a8;
+    border-radius: 10px;
+
+    background-image: linear-gradient(33deg, #0f809c, #aa3e3e 70%);
+
+    transition: scale 100ms ease;
+
+    cursor: pointer;
+
+}
+
+.btn:hover {
+
+    scale: 1.1;
+
+}
+
+.window {
+
+    position: absolute;
+
+    width: 800px;
+    height: 600px;
+
+    top: 100px;
+    left: 100px;
+
+    border: solid 3px var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+    background-color: var(--window-bg-color);
+
+    box-shadow: var(--shadow-color) 2px 2px 2px;
+
+}
+
+.window-titlebar {
+
+    flex: 1;
+
+    display: flex;
+
+    border-bottom: solid 1px var(--border-color);
+
+    background-color: var(--window-titlebar-bg-color);
+
+    user-select: none;
+
+}
+
+.window-title {
+
+    flex: 8;
+
+    padding-inline: 1.5em;
+
+    display: flex;
+
+    align-items: center;
+
+    font-size: 1.75em;
+    font-weight: bold;
+    font-variant-caps: small-caps;
+
+    cursor: grab;
+
+}
+
+.window-controls {
+
+    flex: 2;
+    
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-left: dotted 1px var(--border-color);
+
+    gap: 10px;
+
+}
+
+.btn-controls {
+
+    --btn-controls-color: transparent;
+
+    height: 75%;
+    aspect-ratio: 1;
+
+    border: solid var(--border-color);
+    border-width: 1px;
+    border-radius: 25%;
+
+    background: linear-gradient(0deg, #f1f1f1 var(--btn-gradient-offset), var(--btn-controls-color));
+
+    font-family: monospace;
+    font-size: 2em;
+    font-weight: normal;
+
+    cursor: pointer;
+
+    box-shadow: var(--shadow-color) 2px 2px 2px;
+
+    transition: --btn-gradient-offset 100ms ease-out;
+
+}
+
+.btn-controls:hover {
+
+    --btn-gradient-offset: 10%;
+    font-weight: bold;
+    border-width: 2px;
+
+}
+
+.btn-minimize {
+
+    --btn-controls-color: #ffbe89;
+
+}
+
+.btn-close {
+
+    --btn-controls-color: #ff8888;
+
+}
+
+.window-content {
+
+    flex: 9;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    background-color: var(--window-content-bg-color);
+
+}
