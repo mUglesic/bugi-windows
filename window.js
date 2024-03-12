@@ -6,6 +6,8 @@ class Window {
         this.title = title;
 
         this.generateHTML();
+
+        this.minimized = false;
         
     }
 
@@ -14,8 +16,32 @@ class Window {
         /// WINDOW ///
 
         this.element = document.createElement("div");
-        this.element.id = this.title.toLowerCase().replace(" ", "-");
-        this.element.classList.add("window");
+        // this.element.id = this.title.toLowerCase().replace(" ", "-");
+        this.element.classList.add("window", "open-animation");
+
+        /// TASKBAR ///
+
+        const taskbarElement = document.createElement("button");
+        const taskbarSpanElement = document.createElement("span");
+        taskbarSpanElement.innerHTML = this.title;
+
+        taskbarElement.classList.add("window-taskbar");
+
+        taskbarElement.append(taskbarSpanElement);
+        TASKBAR.append(taskbarElement);
+
+        taskbarElement.addEventListener("click", () => {
+
+            this.element.classList.remove("open-animation", "minimize-animation", "maximize-animation");
+            this.element.classList.add(this.minimized ? "maximize-animation" : "minimize-animation");
+
+            setTimeout(() => {
+
+                this.toggleMinimize();
+
+            }, 200);
+
+        });
 
         /// TITLEBAR ///
 
@@ -52,15 +78,42 @@ class Window {
         controlsElement.append(buttonMinimizeElement, buttonCloseElement);
         titleBarElement.append(controlsElement);
 
+        buttonMinimizeElement.addEventListener("click", () => {
+
+            const index = WINDOWS.indexOf(this);
+
+            if (index !== -1) {
+
+                this.element.classList.remove("open-animation", "maximize-animation");
+                this.element.classList.add("minimize-animation");
+
+                setTimeout(() => {
+
+                    this.toggleMinimize();
+
+                }, 200);
+
+            }
+
+        });
+
         buttonCloseElement.addEventListener("click", () => {
 
             const index = WINDOWS.indexOf(this);
 
             if (index !== -1) {
 
-                WINDOWS.splice(index, 1);
+                this.element.classList.remove("open-animation", "minimize-animation", "maximize-animation");
+                this.element.classList.add("close-animation");
 
-                this.element.remove();
+                setTimeout(() => {
+
+                    WINDOWS.splice(index, 1);
+
+                    taskbarElement.remove();
+                    this.element.remove();
+
+                }, 150);
 
             }
 
@@ -73,6 +126,14 @@ class Window {
         contentElement.classList.add("window-content");
 
         this.element.append(contentElement);
+
+    }
+
+    toggleMinimize() {
+
+        this.minimized = !this.minimized;
+
+        this.element.style.display = this.minimized ? "none" : "flex";
 
     }
 

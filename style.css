@@ -1,4 +1,6 @@
 
+/* VARIABLES */
+
 :root {
 
     --border-color: #363333;
@@ -17,6 +19,8 @@
     initial-value: 75%;
 
 }
+
+/* CSS */
 
 html, body {
 
@@ -37,7 +41,7 @@ body {
 
     font-family: Inter, sans-serif;
     
-    /* background: rgb(1, 0, 49); */
+    overflow: hidden;
 
 }
 
@@ -163,7 +167,7 @@ body {
 
 .btn-controls:hover {
 
-    --btn-gradient-offset: 10%;
+    --btn-gradient-offset: 0%;
     font-weight: bold;
     border-width: 2px;
 
@@ -171,13 +175,13 @@ body {
 
 .btn-minimize {
 
-    --btn-controls-color: #ffbe89;
+    --btn-controls-color: #8888ff;
 
 }
 
 .btn-close {
 
-    --btn-controls-color: #ff8888;
+    --btn-controls-color: #e75757;
 
 }
 
@@ -193,5 +197,68 @@ body {
     flex-wrap: wrap;
 
     background-color: var(--window-content-bg-color);
+
+}
+
+#taskbar {
+
+    position: absolute;
+
+    display: flex;
+
+    bottom: 20px;
+
+}
+
+/* ANIMATIONS */
+
+.close-animation {
+
+    animation: close 150ms forwards ease-out;
+
+}
+
+.open-animation {
+
+    animation: open 150ms forwards ease-out;
+
+}
+
+.minimize-animation {
+
+    animation: minimize 200ms forwards ease-out;
+
+}
+
+.maximize-animation {
+
+    animation: maximize 200ms forwards ease-out;
+    
+}
+
+@keyframes close {
+
+    from {scale: 1}
+    to {scale: 0.1}
+
+}
+
+@keyframes open {
+
+    from {scale: 0.1}
+    to {scale: 1}
+
+}
+
+@keyframes minimize {
+
+    to {top: calc(100% - 200px); left: 50%; translate: -50%; scale: 0.1}
+
+}
+
+@keyframes maximize {
+
+    from {top: calc(100% - 200px); left: 50%; translate: -50%; scale: 0.1}
+    to {top: 100px; left: 100px; translate: 0%; scale: 1}
 
 }
