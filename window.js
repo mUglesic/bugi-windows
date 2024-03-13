@@ -1,13 +1,16 @@
 
 class Window {
 
-    constructor(title) {
+    constructor(title, x, y) {
 
         this.title = title;
+        this.position = {x: x, y: y};
+        this.mouseOffset = {x: 0, y: 0};
 
         this.generateHTML();
 
         this.minimized = false;
+        this.held = false;
         
     }
 
@@ -18,6 +21,42 @@ class Window {
         this.element = document.createElement("div");
         // this.element.id = this.title.toLowerCase().replace(" ", "-");
         this.element.classList.add("window", "open-animation");
+
+        this.updatePosition();
+
+        this.element.addEventListener("click", () => {
+
+            focusProxy.focusedWindow = this;
+
+        });
+
+        /// DRAG OUTLINE ///
+
+        const dragOutlineElement = document.createElement("div");
+        dragOutlineElement.classList.add("drag-outline");
+
+        dragOutlineElement.style.top = `${this.position.y}px`;
+        dragOutlineElement.style.left = `${this.position.x}px`;
+
+        dragOutlineElement.addEventListener("mouseup", (e) => {
+
+            this.held = false;
+            dragOutlineElement.remove();
+
+            this.position = {x: e.clientX - this.mouseOffset.x, y: e.clientY - this.mouseOffset.y};
+
+            focusProxy.focusedWindow = this;
+
+            this.updatePosition();
+
+        });
+
+        dragOutlineElement.addEventListener("mousemove", (e) => {
+
+            dragOutlineElement.style.top = `${e.clientY - this.mouseOffset.y}px`;
+            dragOutlineElement.style.left = `${e.clientX - this.mouseOffset.x}px`;
+
+        });
 
         /// TASKBAR ///
 
@@ -32,14 +71,38 @@ class Window {
 
         taskbarElement.addEventListener("click", () => {
 
-            this.element.classList.remove("open-animation", "minimize-animation", "maximize-animation");
-            this.element.classList.add(this.minimized ? "maximize-animation" : "minimize-animation");
+            if (focus.focusedWindow === this || this.minimized) {
 
-            setTimeout(() => {
+                this.element.classList.remove("open-animation", "minimize-animation", "maximize-animation");
+                this.element.classList.add(this.minimized ? "maximize-animation" : "minimize-animation");
 
-                this.toggleMinimize();
+                if (this.minimized) {
+                    focusProxy.focusedWindow = this;
+                    this.element.style.display = "flex";
+                    setTimeout(() => {
+                        this.element.style.top = `${this.position.y}px`;
+                        this.element.style.left = `${this.position.x}px`;
+                    }, 16);
+                }
+                else {
+                    focusProxy.focusedWindow = null;
+                    this.element.style.top = "calc(100% - 200px)";
+                    this.element.style.left = `${(window.innerWidth / 2) - 400}px`;
+                }
 
-            }, 200);
+                setTimeout(() => {
+
+                    this.toggleMinimize();
+
+                }, 200);
+
+            }
+
+            else {
+
+                focusProxy.focusedWindow = this;
+
+            }
 
         });
 
@@ -62,6 +125,15 @@ class Window {
         titleElement.append(titleSpanElement);
         titleBarElement.append(titleElement);
 
+        titleElement.addEventListener("mousedown", (e) => {
+
+            this.held = true;
+            EXTRAS.append(dragOutlineElement);
+
+            this.mouseOffset = {x: e.offsetX, y: e.offsetY};
+
+        });
+
         /// CONTROLS ///
 
         const controlsElement = document.createElement("div");
@@ -78,14 +150,19 @@ class Window {
         controlsElement.append(buttonMinimizeElement, buttonCloseElement);
         titleBarElement.append(controlsElement);
 
-        buttonMinimizeElement.addEventListener("click", () => {
+        buttonMinimizeElement.addEventListener("click", (e) => {
 
             const index = WINDOWS.indexOf(this);
 
             if (index !== -1) {
 
+                e.stopPropagation();
+
                 this.element.classList.remove("open-animation", "maximize-animation");
                 this.element.classList.add("minimize-animation");
+
+                this.element.style.top = "calc(100% - 200px)";
+                this.element.style.left = `${(window.innerWidth / 2) - 400}px`;
 
                 setTimeout(() => {
 
@@ -97,14 +174,18 @@ class Window {
 
         });
 
-        buttonCloseElement.addEventListener("click", () => {
+        buttonCloseElement.addEventListener("click", (e) => {
 
             const index = WINDOWS.indexOf(this);
 
             if (index !== -1) {
 
+                e.stopPropagation();
+
                 this.element.classList.remove("open-animation", "minimize-animation", "maximize-animation");
                 this.element.classList.add("close-animation");
+
+                focusProxy.focusedWindow = null;
 
                 setTimeout(() => {
 
@@ -129,11 +210,18 @@ class Window {
 
     }
 
+    updatePosition() {
+
+        this.element.style.left = `${this.position.x}px`;
+        this.element.style.top = `${this.position.y}px`;
+
+    }
+
     toggleMinimize() {
 
         this.minimized = !this.minimized;
 
-        this.element.style.display = this.minimized ? "none" : "flex";
+        if (this.minimized) this.element.style.display = "none";
 
     }
 

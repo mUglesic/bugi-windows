@@ -76,9 +76,6 @@ body {
     width: 800px;
     height: 600px;
 
-    top: 100px;
-    left: 100px;
-
     border: solid 3px var(--border-color);
     border-radius: 10px;
     overflow: hidden;
@@ -91,6 +88,21 @@ body {
 
     box-shadow: var(--shadow-color) 2px 2px 2px;
 
+    transition: top 200ms ease-out, left 200ms ease-out;
+
+}
+
+.drag-outline {
+
+    position: absolute;
+
+    width: 800px;
+    height: 600px;
+
+    z-index: 11;
+
+    border: dotted 5px var(--border-color);
+    
 }
 
 .window-titlebar {
@@ -205,8 +217,42 @@ body {
     position: absolute;
 
     display: flex;
+    max-width: 80%;
 
-    bottom: 20px;
+    gap: 10px;
+
+    bottom: 10px;
+
+    z-index: 999;
+
+}
+
+.window-taskbar {
+
+    flex-shrink: 0;
+
+    padding-inline: 10px;
+    padding-block: 5px;
+
+    border: solid 2px var(--border-color);
+    border-radius: 10px;
+
+    background: var(--window-bg-color);
+
+    font-size: 1.5em;
+    font-variant-caps: small-caps;
+
+    transition: filter 100ms, scale 100ms, translate 100ms;
+
+    cursor: pointer;
+
+}
+
+.window-taskbar:hover {
+
+    filter: brightness(1.05);
+    scale: 1.05;
+    translate: 0px -5px;
 
 }
 
@@ -226,13 +272,13 @@ body {
 
 .minimize-animation {
 
-    animation: minimize 200ms forwards ease-out;
+    animation: close 200ms forwards ease-out;
 
 }
 
 .maximize-animation {
 
-    animation: maximize 200ms forwards ease-out;
+    animation: open 200ms forwards ease-out;
     
 }
 
@@ -247,18 +293,5 @@ body {
 
     from {scale: 0.1}
     to {scale: 1}
-
-}
-
-@keyframes minimize {
-
-    to {top: calc(100% - 200px); left: 50%; translate: -50%; scale: 0.1}
-
-}
-
-@keyframes maximize {
-
-    from {top: calc(100% - 200px); left: 50%; translate: -50%; scale: 0.1}
-    to {top: 100px; left: 100px; translate: 0%; scale: 1}
 
 }
