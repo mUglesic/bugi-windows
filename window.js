@@ -43,18 +43,13 @@ class Window {
             this.held = false;
             dragOutlineElement.remove();
 
+            document.removeEventListener("mousemove", updateMouseCoords);
+
             this.position = {x: e.clientX - this.mouseOffset.x, y: e.clientY - this.mouseOffset.y};
 
             focusProxy.focusedWindow = this;
 
             this.updatePosition();
-
-        });
-
-        dragOutlineElement.addEventListener("mousemove", (e) => {
-
-            dragOutlineElement.style.top = `${e.clientY - this.mouseOffset.y}px`;
-            dragOutlineElement.style.left = `${e.clientX - this.mouseOffset.x}px`;
 
         });
 
@@ -132,6 +127,8 @@ class Window {
 
             this.mouseOffset = {x: e.offsetX, y: e.offsetY};
 
+            document.addEventListener("mousemove", updateMouseCoords);
+
         });
 
         /// CONTROLS ///
@@ -207,6 +204,15 @@ class Window {
         contentElement.classList.add("window-content");
 
         this.element.append(contentElement);
+
+        /// HELPER FUNCTIONS ///
+
+        let updateMouseCoords = (e) => {
+
+            dragOutlineElement.style.top = `${e.clientY - this.mouseOffset.y}px`;
+            dragOutlineElement.style.left = `${e.clientX - this.mouseOffset.x}px`;
+
+        }
 
     }
 
