@@ -42,23 +42,6 @@ class Window {
         dragOutlineElement.style.top = `${this.position.y}px`;
         dragOutlineElement.style.left = `${this.position.x}px`;
 
-        dragOutlineElement.addEventListener("touchend", (e) => {
-
-            e.preventDefault();
-
-            this.held = false;
-            dragOutlineElement.remove();
-
-            document.removeEventListener("touchmove", updateTouchCoords);
-
-            this.position = {x: this.finalDragEvent.touches[0].clientX - this.mouseOffset.x, y: this.finalDragEvent.touches[0].clientY - this.mouseOffset.y};
-
-            focusProxy.focusedWindow = this;
-
-            this.updatePosition();
-
-        });
-
         dragOutlineElement.addEventListener("mouseup", (e) => {
 
             e.preventDefault();
@@ -168,6 +151,23 @@ class Window {
             this.mouseOffset = {x: e.offsetX, y: e.offsetY};
 
             document.addEventListener("mousemove", updateMouseCoords);
+
+        });
+
+        titleElement.addEventListener("touchend", (e) => {
+
+            e.preventDefault();
+
+            this.held = false;
+            dragOutlineElement.remove();
+
+            document.removeEventListener("touchmove", updateTouchCoords);
+
+            this.position = {x: this.finalDragEvent.touches[0].clientX - this.mouseOffset.x, y: this.finalDragEvent.touches[0].clientY - this.mouseOffset.y};
+
+            focusProxy.focusedWindow = this;
+
+            this.updatePosition();
 
         });
 
