@@ -13,6 +13,8 @@ class Window {
 
         this.minimized = false;
         this.held = false;
+
+        this.finalDragEvent = undefined;
         
     }
 
@@ -40,7 +42,26 @@ class Window {
         dragOutlineElement.style.top = `${this.position.y}px`;
         dragOutlineElement.style.left = `${this.position.x}px`;
 
+        dragOutlineElement.addEventListener("touchend", (e) => {
+
+            e.preventDefault();
+
+            this.held = false;
+            dragOutlineElement.remove();
+
+            document.removeEventListener("touchmove", updateTouchCoords);
+
+            this.position = {x: this.finalDragEvent.touches[0].clientX - this.mouseOffset.x, y: this.finalDragEvent.touches[0].clientY - this.mouseOffset.y};
+
+            focusProxy.focusedWindow = this;
+
+            this.updatePosition();
+
+        });
+
         dragOutlineElement.addEventListener("mouseup", (e) => {
+
+            e.preventDefault();
 
             this.held = false;
             dragOutlineElement.remove();
@@ -122,11 +143,28 @@ class Window {
         titleElement.append(titleSpanElement);
         titleBarElement.append(titleElement);
 
-        titleElement.addEventListener("mousedown", (e) => {
+        titleElement.addEventListener("touchstart", (e) => {
+
+            e.preventDefault();
 
             this.held = true;
             EXTRAS.append(dragOutlineElement);
 
+            this.finalDragEvent = e;
+            this.mouseOffset = {x: e.touches[0].clientX - this.position.x, y: e.touches[0].clientY - this.position.y};
+
+            document.addEventListener("touchmove", updateTouchCoords);
+
+        });
+
+        titleElement.addEventListener("mousedown", (e) => {
+
+            e.preventDefault();
+
+            this.held = true;
+            EXTRAS.append(dragOutlineElement);
+
+            this.finalDragEvent = e;
             this.mouseOffset = {x: e.offsetX, y: e.offsetY};
 
             document.addEventListener("mousemove", updateMouseCoords);
@@ -234,6 +272,15 @@ class Window {
 
             dragOutlineElement.style.top = `${e.clientY - this.mouseOffset.y}px`;
             dragOutlineElement.style.left = `${e.clientX - this.mouseOffset.x}px`;
+
+        }
+
+        let updateTouchCoords = (e) => {
+
+            this.finalDragEvent = e;
+
+            dragOutlineElement.style.top = `${e.touches[0].clientY - this.mouseOffset.y}px`;
+            dragOutlineElement.style.left = `${e.touches[0].clientX - this.mouseOffset.x}px`;
 
         }
 
