@@ -27,7 +27,7 @@ let focusProxy = new Proxy(focus, {
     }
 });
 
-const img1src = "/public/ole-kloth-NmPpLZ_qxdM-unsplash.jpg";
+const img1src = "public/ole-kloth-NmPpLZ_qxdM-unsplash.jpg";
 
 const lipsum1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a scelerisque risus. Nunc porttitor nibh a justo hendrerit, vitae faucibus urna pharetra. Nulla consequat justo sit amet leo facilisis ornare. Maecenas a sodales lacus. Nam in dui iaculis est tincidunt cursus. Vestibulum in hendrerit dui. Phasellus turpis lorem, dictum eu metus ac, hendrerit lobortis dui. Praesent eget faucibus diam, eget fermentum diam. Nulla eu elit suscipit, ultricies arcu ac, ullamcorper nisl. In hac habitasse platea dictumst. Fusce sed nisi orci. In hac habitasse platea dictumst. Cras eu elit suscipit, blandit elit vitae, ornare purus. Morbi congue enim sed augue hendrerit, quis ullamcorper nisi tristique. Quisque laoreet tristique augue, id porttitor eros feugiat eget."
 const lipsum2 = "Etiam convallis a lectus et elementum. Phasellus a condimentum lectus. Nulla porttitor justo ut purus molestie consequat. Fusce in pellentesque quam, non vulputate nisl. Nunc finibus finibus sagittis. Mauris dolor mi, mattis ac diam a, eleifend suscipit ante. Pellentesque odio ligula, blandit finibus volutpat et, tempus pretium nibh. Duis at pellentesque magna. Nulla fringilla, massa nec accumsan imperdiet, erat nibh cursus orci, nec gravida urna tortor id mauris. In hac habitasse platea dictumst. Nam eget fringilla libero. Vivamus ornare leo ex, id iaculis quam molestie a. Aliquam erat volutpat."
