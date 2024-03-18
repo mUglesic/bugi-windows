@@ -102,6 +102,8 @@ body {
     z-index: 11;
 
     border: dotted 5px var(--border-color);
+
+    cursor: grabbing;
     
 }
 
@@ -208,7 +210,17 @@ body {
 
     flex-wrap: wrap;
 
+    overflow-y: auto;
+
     background-color: var(--window-content-bg-color);
+
+}
+
+.window-innerContent {
+
+    margin: 1em;
+
+    font-size: 1.5em;
 
 }
 

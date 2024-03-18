@@ -1,11 +1,13 @@
 
 class Window {
 
-    constructor(title, x, y) {
+    constructor(title, x, y, contents) {
 
         this.title = title;
         this.position = {x: x, y: y};
         this.mouseOffset = {x: 0, y: 0};
+
+        this.contents = contents;
 
         this.generateHTML();
 
@@ -204,6 +206,27 @@ class Window {
         contentElement.classList.add("window-content");
 
         this.element.append(contentElement);
+
+        /// DEMO CONTENT ///
+
+        const paragraphElement1 = document.createElement("p");
+        const imgElement1 = document.createElement("img");
+        const paragraphElement2 = document.createElement("p");
+        const paragraphElement3 = document.createElement("p");
+
+        paragraphElement1.classList.add("window-innerContent");
+        paragraphElement2.classList.add("window-innerContent");
+        paragraphElement3.classList.add("window-innerContent");
+
+        paragraphElement1.innerHTML = this.contents[0];
+        imgElement1.src = this.contents[1];
+        paragraphElement2.innerHTML = this.contents[2];
+        paragraphElement3.innerHTML = this.contents[3];
+
+        contentElement.append(paragraphElement1);
+        contentElement.append(imgElement1);
+        contentElement.append(paragraphElement2);
+        contentElement.append(paragraphElement3);
 
         /// HELPER FUNCTIONS ///
 

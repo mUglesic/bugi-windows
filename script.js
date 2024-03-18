@@ -12,7 +12,7 @@ function createNewWindow() {
     const xRand = Math.floor(200 + (Math.random() * 100) * (Math.random() > 0.5 ? 1 : -1));
     const yRand = Math.floor(200 + (Math.random() * 100) * (Math.random() > 0.5 ? 1 : -1));
 
-    const wNew = new Window(`Window ${WINDOWS.length + 1}`, xRand, yRand);
+    const wNew = new Window(`Window ${WINDOWS.length + 1}`, xRand, yRand, [lipsum1, img1src, lipsum2, lipsum3]);
 
     WINDOWS.push(wNew);
 
