@@ -20,4 +20,6 @@ function createNewWindow() {
 
     focusProxy.focusedWindow = wNew;
 
+    OPEN_AUDIO.play();
+
 }

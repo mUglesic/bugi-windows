@@ -3,6 +3,9 @@ const WINDOW_WRAPPER = document.getElementById("window-wrapper");
 const TASKBAR = document.getElementById("taskbar");
 const EXTRAS = document.getElementById("extras");
 
+const OPEN_AUDIO = new Audio("public/audio/maximize_008.ogg");
+const CLOSE_AUDIO = new Audio("public/audio/minimize_008.ogg");
+
 const WINDOWS = [];
 
 let focus = {focusedWindow: null};

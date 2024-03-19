@@ -231,6 +231,8 @@ class Window {
                     taskbarElement.remove();
                     this.element.remove();
 
+                    CLOSE_AUDIO.play();
+
                 }, 150);
 
             }
